@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="character_image_description">Character image</string>
+    <string name="character_name">Name: %1$s</string>
+    <string name="character_gender">Gender: %1$s</string>
+    <string name="character_status">Status: %1$s</string>
+    <string name="characters_species">Species: %1$s</string>
+    <string name="character_created">Created: %1$s</string>
+</resources>

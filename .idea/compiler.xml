@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="FinalTask.app" target="11" />
+      <module name="FinalTask.feature-character_list" target="11" />
+      <module name="FinalTask.feature-detail" target="11" />
+      <module name="FinalTask.utils" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="image_size">190dp</dimen>
+    <dimen name="card_height">190dp</dimen>
+    <dimen name="card_margin">15dp</dimen>
+    <dimen name="card_elevation">25dp</dimen>
+    <dimen name="card_corner_radius">20dp</dimen>
+    <dimen name="guideLine_begin_size">210dp</dimen>
+    <dimen name="guideLine_end_size">20dp</dimen>
+    <dimen name="default_size">0dp</dimen>
+    <dimen name="text_size">32sp</dimen>
+</resources>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/card_height"
+    android:layout_margin="@dimen/card_margin"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/characterImage"
+            android:layout_width="@dimen/image_size"
+            android:layout_height="@dimen/image_size"
+            android:contentDescription="@string/character_image_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/characterName"
+            android:layout_width="@dimen/default_size"
+            android:layout_height="wrap_content"
+            android:text="@string/character_name"
+            app:layout_constraintBottom_toTopOf="@id/characterGender"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toEndOf="@id/guideline_begin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
+
+        <TextView
+            android:id="@+id/characterGender"
+            android:layout_width="@dimen/default_size"
+            android:layout_height="wrap_content"
+            android:text="@string/character_gender"
+            app:layout_constraintBottom_toTopOf="@id/characterStatus"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toEndOf="@id/guideline_begin"
+            app:layout_constraintTop_toBottomOf="@id/characterName" />
+
+        <TextView
+            android:id="@+id/characterStatus"
+            android:layout_width="@dimen/default_size"
+            android:layout_height="wrap_content"
+            android:text="@string/character_status"
+            app:layout_constraintBottom_toTopOf="@id/characterSpecies"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toEndOf="@id/guideline_begin"
+            app:layout_constraintTop_toBottomOf="@id/characterGender" />
+
+        <TextView
+            android:id="@+id/characterSpecies"
+            android:layout_width="@dimen/default_size"
+            android:layout_height="wrap_content"
+            android:text="@string/characters_species"
+            app:layout_constraintBottom_toTopOf="@id/characterCreated"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toEndOf="@id/guideline_begin"
+            app:layout_constraintTop_toBottomOf="@id/characterStatus" />
+
+        <TextView
+            android:id="@+id/characterCreated"
+            android:layout_width="@dimen/default_size"
+            android:layout_height="wrap_content"
+            android:text="@string/character_created"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toEndOf="@id/guideline_begin"
+            app:layout_constraintTop_toBottomOf="@id/characterSpecies" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_begin"
+            android:layout_width="@dimen/default_size"
+            android:layout_height="@dimen/default_size"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/guideLine_begin_size" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="@dimen/default_size"
+            android:layout_height="@dimen/default_size"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/guideLine_end_size" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
