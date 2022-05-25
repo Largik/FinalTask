@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/characterListFragment"
-        android:name="com.test.feature_character_list.presentation.CharacterListFragment"
+        android:name="com.test.feature_character_list.presentation.CharactersListFragment"
         android:label="CharacterListFragment">
 
         <deepLink app:uri="jetpack://character_list" />

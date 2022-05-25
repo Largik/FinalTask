@@ -58,5 +58,7 @@ dependencies {
 
     implementation project(":feature-character_list")
     implementation project(":feature-detail")
+    implementation project(":core-network")
+    implementation project(":core-db")
     implementation project(":utils")
 }

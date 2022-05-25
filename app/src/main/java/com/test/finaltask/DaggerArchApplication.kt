@@ -1,28 +1,20 @@
 package com.test.finaltask
 
 import android.app.Application
-import android.content.Context
+import com.test.feature_character_list.di.FeatureListDepsStore
 import com.test.finaltask.di.AppComponent
 import com.test.finaltask.di.DaggerAppComponent
 
 class DaggerArchApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        appContext = applicationContext
-        AppComponent.init(
-            DaggerAppComponent.builder()
-                .build()
-        )
-        AppComponent.get().inject(this)
-//        CharactersListComponentHolder.init(object : CharactersListFeatureDependencies {
-//            //TODO
-//        })
+   val appComponent: AppComponent by lazy {
+      DaggerAppComponent.builder()
+         .application(this)
+         .apiKey(BuildConfig.API_KEY)
+         .build()
+   }
 
-    }
-
-    companion object {
-        @Volatile
-        lateinit var appContext: Context
-            private set
-    }
+   override fun onCreate() {
+      super.onCreate()
+      FeatureListDepsStore.deps = appComponent
+   }
 }

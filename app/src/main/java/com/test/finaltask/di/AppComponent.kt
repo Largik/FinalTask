@@ -1,27 +1,30 @@
 package com.test.finaltask.di
 
-import com.test.finaltask.DaggerArchApplication
+import android.app.Application
+import android.content.Context
+import com.test.core_network.data.RetrofitService
+import com.test.feature_character_list.di.FeatureListDeps
+import dagger.BindsInstance
 import dagger.Component
-import dagger.internal.Preconditions
-import javax.inject.Singleton
 
-@Component(modules = [AppModule::class])
-@Singleton
-abstract class AppComponent {
-    abstract fun inject(daggerArchApplication: DaggerArchApplication)
+@[AppScope Component(modules = [AppModule::class])]
+abstract class AppComponent: FeatureListDeps {
 
-    companion object {
-        @Volatile
-        private var instance: AppComponent? = null
+    override val retrofitService: RetrofitService
 
-        fun get(): AppComponent {
-            return Preconditions.checkNotNull(instance,
-                    "AppComponent is not initialized yet. Call init first.")!!
-        }
-
-        fun init(component: AppComponent) {
-            require(instance == null) { "AppComponent is already initialized." }
-            instance = component
-        }
+    @Component.Factory
+    interface Factory {
+        fun create(@BindsInstance context: Context): AppComponent
     }
-}
+
+    @Component.Builder
+    interface Builder {
+
+        @BindsInstance
+        fun application(application: Application): Builder
+
+        @BindsInstance
+        fun apiKey(@FeatureListApiQualifier apiKey: String): Builder
+
+        fun build(): AppComponent
+    }}
