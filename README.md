@@ -10,11 +10,11 @@ ___
 6. Проект многомодульный.
 
 ### Стек технологий
-Lang - Kotlin
-Arch - Clean Architecture + MVVM
-Async - Coroutines + Flow
-Navigation - Navigation Component
-DI - Hilt
-Cache - Room
-Network - Retrofit + Moshi
-Paging - Paging 3
+Lang - Kotlin\
+Arch - Clean Architecture + MVVM\
+Async - Coroutines + Flow\
+Navigation - Navigation Component\
+DI - Hilt\
+Cache - Room\
+Network - Retrofit + Moshi\
+Paging - Paging 3\
