@@ -31,17 +31,18 @@ class DetailFragment : Fragment() {
         viewModel.getCharacter(arguments?.getString(CHARACTER_ID_KEY)?.toInt() ?: 0)
             .observe(viewLifecycleOwner) {
 
-                binding.characterName.text = it.name
+                binding.characterName.text = "Name: " + it.name?: "not found"
                 (activity as AppCompatActivity).supportActionBar?.title = it.name
 
-                binding.characterGender.text = it.gender
-                binding.characterStatus.text = it.status
-                binding.characterSpecies.text = it.species
-                binding.characterCreated.text = it.createDate
+                binding.characterGender.text = "Gender: " + it.gender?: "not found"
+                binding.characterStatus.text = "Status: " + it.status?: "not found"
+                binding.characterSpecies.text = "Species: " + it.species?: "not found"
+                binding.characterCreated.text = "Created: " + it.createDate?: "not found"
 
 
                 Glide.with(binding.characterImage.context)
                     .load(it.image)
+                    .centerInside()
                     .into(binding.characterImage)
             }
     }
