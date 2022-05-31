@@ -6,13 +6,15 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/character_list"
+        android:id="@+id/characterList"
         android:layout_width="match_parent"
         android:layout_height="@dimen/default_size"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/character_item"
-        app:layout_constraintVertical_bias="0.0" />
+        tools:listitem="@layout/character_item" />
 
     <ProgressBar
         android:id="@+id/progressBar"

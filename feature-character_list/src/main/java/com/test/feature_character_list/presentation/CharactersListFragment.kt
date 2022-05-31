@@ -1,33 +1,32 @@
 package com.test.feature_character_list.presentation
 
-import android.app.Activity
-import android.app.Application
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
+import androidx.recyclerview.widget.RecyclerView
+import com.test.feature_character_list.R
 import com.test.feature_character_list.databinding.CharacterListBinding
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class CharactersListFragment : Fragment() {
 
-    @Inject
-    lateinit var charactersListViewModel: CharactersListViewModel
-
     private lateinit var binding: CharacterListBinding
+    private val viewModel: CharactersListViewModel by viewModels()
 
-    override fun onAttach(context: Context) {
-        ViewModelProvider(this).get<CharactersListViewModel>()
-            .newDetailsComponent.inject(this)
-        super.onAttach(context)
+    private val pagingAdapter: CharactersPagingAdapter by lazy {
+        CharactersPagingAdapter()
     }
 
     override fun onCreateView(
@@ -36,40 +35,75 @@ class CharactersListFragment : Fragment() {
     ): View {
         binding = CharacterListBinding.inflate(inflater, container, false)
 
-//        charactersListViewModel.charactersList.observe(
-//            viewLifecycleOwner
-//        ) { characters ->
-//            if(characters.isNotEmpty()) {
-//                characters?.let { /*charactersListAdapter.submitList(characters)*/ }
-//                hideProgressBar()
-//            } else {
-//                showError()
-//                hideProgressBar()
-//            }
-//        }
+        setHasOptionsMenu(true)
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.character_List_action_bar)
 
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    @OptIn(FlowPreview::class)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.appbar_menu, menu)
 
-        binding.characterList.setOnClickListener {
-            val navOptions = NavOptions.Builder()
-                .setEnterAnim(com.test.utils.R.anim.slide_in_left)
-                .setExitAnim(com.test.utils.R.anim.slide_out_left)
-                .setPopEnterAnim(com.test.utils.R.anim.slide_in_right)
-                .setPopExitAnim(com.test.utils.R.anim.slide_out_right)
-                .build()
-            findNavController().navigate(Uri.parse("jetpack://detail/Man"), navOptions)
+        val searchItem = menu.findItem(R.id.search)
+        val searchView = searchItem.actionView as SearchView
+
+        lifecycleScope.launch {
+            searchView.getQueryTextChangeStateFlow()
+                .debounce(SEARCH_TIMEOUT)
+                .distinctUntilChanged()
+                .collectLatest { query ->
+                    lifecycleScope.launch {
+                        viewModel.getCharactersFlow(query)
+                            .collectLatest(pagingAdapter::submitData)
+                    }
+                }
+        }
+        bindPagingAdapter()
+    }
+
+    private fun bindPagingAdapter() {
+        pagingAdapter.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.ALLOW
+
+        val header = CharactersListLoadStateAdapter { pagingAdapter.retry() }
+        bindLoadingStates(header)
+
+        binding.characterList.adapter = pagingAdapter.withLoadStateHeaderAndFooter(
+            header = header,
+            footer = CharactersListLoadStateAdapter { pagingAdapter.retry() }
+        )
+    }
+
+    private fun bindLoadingStates(header: CharactersListLoadStateAdapter) {
+        lifecycleScope.launch {
+            pagingAdapter.loadStateFlow.collectLatest { loadState ->
+                header.loadState = loadState.mediator
+                    ?.refresh
+                    ?.takeIf { it !is LoadState.NotLoading && pagingAdapter.itemCount > 0 }
+                    ?: loadState.prepend
+
+                binding.characterList.isVisible =
+                    loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
+
+                binding.progressBar.isVisible =
+                    loadState.mediator?.refresh is LoadState.Loading
+
+                val initialRefreshFailed =
+                    loadState.mediator?.refresh is LoadState.Error && pagingAdapter.itemCount == 0
+
+                val refreshFailed =
+                    loadState.mediator?.refresh is LoadState.Error || loadState.source.refresh is LoadState.Error
+
+                if (initialRefreshFailed || refreshFailed) {
+                    binding.characterList.scrollToPosition(TOP_POSITION)
+                }
+            }
         }
     }
 
-    private fun hideProgressBar() {
-        binding.progressBar.visibility = View.GONE
-        binding.characterList.visibility = View.VISIBLE
-    }
-    private fun showError() {
-        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+    private companion object {
+        const val TOP_POSITION = 0
+        const val SEARCH_TIMEOUT = 500L
     }
 }

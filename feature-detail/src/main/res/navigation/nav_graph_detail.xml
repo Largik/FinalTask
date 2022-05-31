@@ -9,10 +9,9 @@
         android:name="com.test.feature_detail.presentation.DetailFragment"
         android:label="DetailFragment">
 
-        <deepLink app:uri="jetpack://detail/{name}" />
+        <deepLink app:uri="jetpack://detail/{characterId}" />
 
         <argument
-            android:name="name"
-            app:argType="string" />
+            android:name="characterId" />
     </fragment>
 </navigation>

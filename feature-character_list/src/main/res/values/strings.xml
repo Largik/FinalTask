@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="character_List_action_bar">Character List</string>
     <string name="character_image_description">Character image</string>
+    <string name="search">Search</string>
+    <string name="content_description_search">Search characters</string>
+    <string name="name">NAME</string>
 </resources>

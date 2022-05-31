@@ -1,23 +1,34 @@
 package com.test.core_db.di
 
 import android.app.Application
-import com.test.core_db.AppDatabase
-import com.test.core_db.dao.CharacterDao
+import com.test.core_db.RAMDatabase
+import com.test.core_db.dao.CharactersDao
+import com.test.core_db.dao.RemoteKeyDao
+import com.test.core_db.getDatabase
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
+@InstallIn(SingletonComponent::class)
 class DatabaseModule {
     @Singleton
     @Provides
-    fun provideRoomInstance(application: Application): AppDatabase {
-        return AppDatabase.getInstance(application.applicationContext)
+    fun provideDatabaseInstance(application: Application): RAMDatabase {
+        return getDatabase(application.applicationContext)
     }
 
     @Singleton
     @Provides
-    fun provideCharacterDao(appDatabase: AppDatabase): CharacterDao {
-        return appDatabase.getCharacterDao()
+    fun provideCharacterDao(database: RAMDatabase): CharactersDao {
+        return database.charactersDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRemoteKeysDao(database: RAMDatabase): RemoteKeyDao {
+        return database.remoteKeyDao()
     }
 }
