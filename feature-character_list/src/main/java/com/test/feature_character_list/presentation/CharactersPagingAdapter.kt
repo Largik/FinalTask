@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.test.core_db.domain.CharacterModel
 import com.test.feature_character_list.databinding.CharacterItemBinding
-import com.test.feature_character_list.databinding.CharacterListBinding
 
 class CharactersPagingAdapter :
     PagingDataAdapter<CharacterModel, CharactersPagingAdapter.ViewHolder>(CharacterDiffCallback()) {

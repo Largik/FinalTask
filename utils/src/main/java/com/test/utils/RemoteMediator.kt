@@ -25,6 +25,7 @@ class RemoteMediator @Inject constructor(
     fun selectQuery(searchQuery: String) {
         query = searchQuery
     }
+
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, CharacterEntity>

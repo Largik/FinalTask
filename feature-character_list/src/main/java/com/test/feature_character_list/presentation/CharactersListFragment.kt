@@ -36,7 +36,8 @@ class CharactersListFragment : Fragment() {
         binding = CharacterListBinding.inflate(inflater, container, false)
 
         setHasOptionsMenu(true)
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.character_List_action_bar)
+        (activity as AppCompatActivity).supportActionBar?.title =
+            getString(R.string.character_List_action_bar)
 
         return binding.root
     }

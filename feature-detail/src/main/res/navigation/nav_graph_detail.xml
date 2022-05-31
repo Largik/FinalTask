@@ -11,7 +11,6 @@
 
         <deepLink app:uri="android-app://detail/{characterId}" />
 
-        <argument
-            android:name="characterId" />
+        <argument android:name="characterId" />
     </fragment>
 </navigation>
