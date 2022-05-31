@@ -7,37 +7,8 @@
     <fragment
         android:id="@+id/characterListFragment"
         android:name="com.test.feature_character_list.presentation.CharactersListFragment"
-        android:label="CharacterListFragment">
-        <argument
-            android:name="characterId"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_characterListFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
+        android:label="CharacterListFragment" />
 
-    <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.test.feature_detail.presentation.DetailFragment"
-        android:label="DetailFragment">
-
-        <deepLink app:uri="android-app://detail/{characterId}" />
-
-        <argument android:name="characterId" />
-    </fragment>
+    <include app:graph="@navigation/nav_graph_detail" />
+    <include app:graph="@navigation/nav_graph_character_list" />
 </navigation>
-
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-    <!--<navigation xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--    android:id="@+id/nav_graph_application"-->
-    <!--    app:startDestination="@id/characterListFragment">-->
-
-    <!--    <fragment-->
-    <!--        android:id="@+id/characterListFragment"-->
-    <!--        android:name="com.test.feature_character_list.presentation.CharactersListFragment"-->
-    <!--        android:label="CharacterListFragment" />-->
-
-    <!--    <include app:graph="@navigation/nav_graph_detail" />-->
-    <!--    <include app:graph="@navigation/nav_graph_character_list" />-->
-    <!--</navigation>-->

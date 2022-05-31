@@ -8,11 +8,6 @@
         android:id="@+id/characterListFragment"
         android:name="com.test.feature_character_list.presentation.CharactersListFragment"
         android:label="CharacterListFragment">
-
-        <argument
-            android:name="characterId"
-            app:argType="integer" />
-        <deepLink app:uri="jetpack://character_list/{characterId}/{integer}" />
     </fragment>
 
 </navigation>
