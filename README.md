@@ -17,4 +17,4 @@ Navigation - Navigation Component\
 DI - Hilt\
 Cache - Room\
 Network - Retrofit + Moshi\
-Paging - Paging 3\
+Paging - Paging 3
